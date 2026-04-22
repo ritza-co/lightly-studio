@@ -1,13 +1,13 @@
 # Welcome to LightlyStudio!
 
 **[LightlyStudio](https://www.lightly.ai/lightly-studio)** is an open-source tool designed to unify
-your data workflows from curation, annotation and management. Built with Rust for speed and
+your data workflows across curation, annotation, and management. Built with Rust for speed and
 efficiency, it lets you work seamlessly with datasets like COCO and ImageNet, even on a MacBook Pro
 with an M1 chip and 16 GB of memory.
 
 === "Explore"
 
-    ![Image title](https://storage.googleapis.com/lightly-public/studio/search.gif){ width="100%"}
+    ![Image title](https://storage.googleapis.com/lightly-public/studio/search.gif){ width="100%" }
     _Discover insights instantly with AI-powered search and smart filters.
     Learn more in [Search and Filter](concepts_and_tools/search_and_filter.md)._
 
@@ -28,7 +28,7 @@ with an M1 chip and 16 GB of memory.
 
 ## Installation
 
-Ensure you have **Python 3.9 to 3.14**. We strongly recommend using a virtual environment.
+Ensure you have **Python 3.9 to 3.14** installed. We strongly recommend using a virtual environment.
 
 The library is OS-independent and works on Windows, Linux, and macOS.
 
@@ -148,15 +148,16 @@ directly use your own image, video, or YOLO/COCO dataset.
     1. Run `python example_coco.py` in your terminal.
     1. Click on the printed URL to open the app in your browser.
 
-**How It Works**
+### How It Works
 
 -  Your **Python script** creates a LightlyStudio **dataset**.
 -  The `dataset.add_<samples>_from_<source>` functions read your samples and annotations, calculate
    embeddings, and save metadata to a local `lightly_studio.db` file (using DuckDB).
 -  `ls.start_gui()` starts a **local backend API** server.
--  This server reads from `lightly_studio.db` and serves data to the **UI Application** running in
+-  This local backend API server reads from `lightly_studio.db` and serves data to the **UI Application** running in
    your browser (by default `http://localhost:8001`).
--  Images and videos are streamed from their original local folder or remote storage for display in the UI.
+-  The local backend API server also streams images and videos from their original local folder or remote
+   storage directly to the UI.
 
 !!! note "For Linux Users"
     We recommend using Firefox for the best experience with embedding plots, as other browsers might
@@ -224,6 +225,6 @@ directly use your own image, video, or YOLO/COCO dataset.
 
 ## Python API
 
-LightlyStudio has a powerful [Python interface](api/index.md). You can not only index datasets but
-also query and manipulate them using code. It supports local and cloud-hosted image and video
-folders; see [Using Cloud Storage](api/index.md#using-cloud-storage) for setup and limitations.
+LightlyStudio has a powerful [Python interface](api/index.md). Not only can you index datasets, but
+you can also query and manipulate them using code. It supports local and cloud-hosted image and
+video folders. See [Using Cloud Storage](api/index.md#using-cloud-storage) for setup and limitations.
