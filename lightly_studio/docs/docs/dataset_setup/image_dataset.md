@@ -23,7 +23,7 @@ dataset.add_images_from_path(path=f"{download_path}/coco_subset_128_images/image
 The `ls.ImageDataset.create()` method call is lightweight and initializes an empty dataset.
 
 The `add_images_from_path(...)` method accepts a path to a file or a folder. If the path is a folder,
-it recursively searches for images in it. It also supports remote paths, like
+it recursively searches for images in that folder. It also supports remote paths, like
 `s3://my-bucket/my-folder`. See [Using Cloud Storage](../api/index.md#using-cloud-storage) for more details.
 
 LightlyStudio automatically embeds added images, so that embedding plot and image search are enabled.
