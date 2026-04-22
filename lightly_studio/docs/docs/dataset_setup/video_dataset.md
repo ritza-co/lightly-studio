@@ -23,7 +23,7 @@ dataset.add_videos_from_path(path=f"{dataset_path}/youtube_vis_50_videos/train/v
 The `ls.VideoDataset.create()` method call is lightweight and initializes an empty dataset.
 
 The `add_videos_from_path(...)` method accepts a path to a file or a folder. If the path is a folder,
-it recursively searches for videos in it. It also supports remote paths, like
+it recursively searches for videos in that folder. It also supports remote paths, like
 `s3://my-bucket/my-folder`. See [Using Cloud Storage](../api/index.md#using-cloud-storage) for more details.
 
 LightlyStudio automatically embeds added videos, so that embedding plot and video search
