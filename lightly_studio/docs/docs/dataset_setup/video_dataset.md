@@ -1,4 +1,4 @@
-# Video Dataset
+# Video Datasets
 
 This guide explains how to load videos into LightlyStudio, how to explore them
 in the GUI, and how to use the Python API to query and manipulate them.
@@ -23,19 +23,19 @@ dataset.add_videos_from_path(path=f"{dataset_path}/youtube_vis_50_videos/train/v
 The `ls.VideoDataset.create()` method call is lightweight and initializes an empty dataset.
 
 The `add_videos_from_path(...)` method accepts a path to a file or a folder. If the path is a folder,
-it will recursively search for videos in it. A remote path like `s3://my-bucket/my-folder` is also
-supported, see [Using Cloud Storage](../api/index.md#using-cloud-storage) for more details.
+it recursively searches for videos in that folder. It also supports remote paths, like
+`s3://my-bucket/my-folder`. See [Using Cloud Storage](../api/index.md#using-cloud-storage) for more details.
 
-Videos are automatically embedded so that embedding plot and video search
+LightlyStudio automatically embeds added videos, so that embedding plot and video search
 are enabled. To skip embedding, pass `embed=False` to the method.
 See the [API reference](../api/dataset.md#lightly_studio.VideoDataset.add_videos_from_path) for
 the full list of arguments.
 
 ### From an Annotation Format
 
-`VideoDataset` can be loaded with annotations from the YouTube-VIS format. Currently, object detection
-and instance segmentation annotations are supported. See
-[API reference](../api/dataset.md#lightly_studio.VideoDataset.add_videos_from_youtube_vis) for full details.
+The `VideoDataset` class supports loading annotations from the YouTube-VIS format. Currently, object detection
+and instance segmentation annotations are supported. See the
+[API reference](../api/dataset.md#lightly_studio.VideoDataset.add_videos_from_youtube_vis) for the full details.
 
 === "YouTube-VIS Object Detections"
 
@@ -72,10 +72,10 @@ and instance segmentation annotations are supported. See
     - Annotations: Defines object bounding boxes with per-frame tracking.
 
     Note that the original YouTube-VIS format provides each video as a list of extracted frames.
-    LightlyStudio instead expects the videos as video files. The file name is deducted
-    from frame path. E.g. for `video003/00010.jpg`, the video file name is expected
+    LightlyStudio instead expects the videos as video files. The file name is derived
+    from the frame path. For example, for `video003/00010.jpg`, the video file name is expected
     to be `video003.*` with a video file extension. You can specify the exact name by setting the
-    folder in the frame path, e.g. `video003.mp4/00010.jpg`.
+    folder in the frame path, for example, `video003.mp4/00010.jpg`.
 
     </details>
 
@@ -115,17 +115,17 @@ and instance segmentation annotations are supported. See
     - Annotations: Defines object instances with per-frame segmentation masks.
 
     Note that the original YouTube-VIS format provides each video as a list of extracted frames.
-    LightlyStudio instead expects the videos as video files. The file name is deducted
-    from frame path. E.g. for `video003/00010.jpg`, the video file name is expected
+    LightlyStudio instead expects the videos as video files. The file name is derived
+    from the frame path. For example, for `video003/00010.jpg`, the video file name is expected
     to be `video003.*` with a video file extension. You can specify the exact name by setting the
-    folder in the frame path, e.g. `video003.mp4/00010.jpg`.
+    folder in the frame path, for example, `video003.mp4/00010.jpg`.
 
     </details>
 
 ### From a Pre-Existing Dataset
 
-Once a dataset is populated, the data is stored in a database. It can be loaded later as follows
-to skip indexing and embedding it again:
+Once a dataset is populated, the data is stored in a database. To skip indexing and embedding that
+data again, load it later, as follows:
 
 ```python title="Load a Video Dataset from a Database"
 import lightly_studio as ls
@@ -138,17 +138,17 @@ dataset = ls.VideoDataset.load_or_create()
 ```
 
 All three functions `create()`, `load()`, and `load_or_create()` accept an optional `name` argument
-to store multiple datasets in the database, note however that the open-source version of LightlyStudio
-GUI displays only a single dataset.
+to store multiple datasets in the database. Note, however, that the open-source version of the
+LightlyStudio GUI displays only a single dataset.
 
 !!! tip
     The `add_videos_from_path(...)` and `add_videos_from_youtube_vis(...)` methods skip
-    duplicate videos, the duplicates are detected based on absolute path.
-    Therefore you can safely use them in a single script with `load_or_create()`,
-    adding and embedding the videos will be skipped on subsequent calls.
+    duplicate videos. They detect duplicates based on absolute path. You can
+    safely use both methods in a single script with `load_or_create()`, because
+    subsequent calls will skip the adding and embedding steps.
 
 
-## Video Dataset in the GUI
+## Video Datasets in the GUI
 
 Launch the GUI from your terminal:
 
@@ -156,43 +156,43 @@ Launch the GUI from your terminal:
 lightly-studio gui
 ```
 
-The command starts a local web server. Click the link printed in the console - by default
-`http://localhost:8001` - to open the GUI in your browser. Note that the GUI can also be
-started from a Python script by calling `ls.start_gui()`.
+The command starts a local web server. Click the link printed in the console — by default
+`http://localhost:8001` — to open the GUI in your browser. Note that you can also start
+the GUI from a Python script by calling `ls.start_gui()`.
 
 The GUI for a video dataset has two main pages: **Videos** and **Frames**, accessible
 via the navigation bar at the top.
 
-### Video Grid View
+### Videos Grid View
 
 The Videos page shows a grid of video thumbnails. From here, you can perform multiple actions:
 
-- Hover with a mouse over a video to see a quick playback preview.
+- Hover your cursor over a video to see a quick playback preview.
 - Use the left panel to filter the videos by tags, annotation labels or metadata (width, height, duration).
-- Use the search bar to do similarity search by text or another video from the dataset.
+- Use the search bar to conduct a similarity search by text or by another video from the dataset.
 - Use the `Show Embeddings` button to explore the data in embedding space.
-- Use the `Menu` dropdown for further actions like plugins, sampling, classification, export and more.
+- Use the `Menu` dropdown for further actions like plugins, sampling, classification, export, and more.
 
-Refer to dedicated pages in this documentation on every feature for more details.
+Refer to the dedicated pages in this documentation for more details on each feature.
 
 ![Video Dataset Grid](https://storage.googleapis.com/lightly-public/studio/video_dataset_video_grid.png){ width="100%" }
 
-### Video Detail View
+### Videos Detail View
 
 Double-clicking on a video opens the video detail view. Here you can play the video, view
-frame-level annotations, add captions or view metadata. Use the `View frame` link to navigate
+frame-level annotations, add captions, or view metadata. Use the `View frame` link to navigate
 to the frame detail view of the currently shown frame.
 
 ![Video Detail View](https://storage.googleapis.com/lightly-public/studio/video_dataset_video_detail.png){ width="100%" }
 
-### Frame Grid View
+### Frames Grid View
 
 The Frames page shows a grid of individual video frames extracted from all videos.
 You can use the left panel to filter frames by tags, annotation labels or metadata.
 
 ![Video Frame Grid](https://storage.googleapis.com/lightly-public/studio/video_dataset_frame_grid.png){ width="100%" }
 
-### Frame Detail View
+### Frames Detail View
 
 Double-clicking on a frame opens the frame detail view. Here you can edit
 frame-level annotations with object track IDs, add classifications or captions,
@@ -202,12 +202,12 @@ Use the `View video` link to navigate to the parent video.
 ![Video Frame Detail](https://storage.googleapis.com/lightly-public/studio/video_dataset_frame_detail.png){ width="100%" }
 
 
-## Video Dataset in the Python API
+## Video Datasets in the Python API
 
-### VideoDataset class
+### The VideoDataset Class
 
-The main entrypoint is the [VideoDataset class](../api/dataset.md#videodataset).
-An instance of it can be created as described above by using one of the factory methods:
+The main entrypoint is the [`VideoDataset` class](../api/dataset.md#videodataset).
+You can create an instance of the class, as described above, by using one of the factory methods:
 
 ```python title="Create or load a VideoDataset"
 dataset = ls.VideoDataset.create()
@@ -222,9 +222,9 @@ for video in dataset:
     print(video.file_name)
 ```
 
-### VideoSample class
+### The VideoSample Class
 
-[VideoSample class](../api/sample.md#videosample) provides read and write access to the video data.
+The [`VideoSample` class](../api/sample.md#videosample) provides read and write access to the video data.
 
 ```python title="Access video data"
 # Grab one sample

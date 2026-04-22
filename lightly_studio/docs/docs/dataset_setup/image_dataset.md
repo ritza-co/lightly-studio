@@ -1,4 +1,4 @@
-# Image Dataset
+# Image Datasets
 
 This guide explains how to load images into LightlyStudio, how to explore them
 in the GUI, and how to use the Python API to query and manipulate them.
@@ -23,19 +23,19 @@ dataset.add_images_from_path(path=f"{download_path}/coco_subset_128_images/image
 The `ls.ImageDataset.create()` method call is lightweight and initializes an empty dataset.
 
 The `add_images_from_path(...)` method accepts a path to a file or a folder. If the path is a folder,
-it will recursively search for images in it. A remote path like `s3://my-bucket/my-folder` is also
-supported, see [Using Cloud Storage](../api/index.md#using-cloud-storage) for more details.
+it recursively searches for images in that folder. It also supports remote paths, like
+`s3://my-bucket/my-folder`. See [Using Cloud Storage](../api/index.md#using-cloud-storage) for more details.
 
-Added images are automatically embedded so that embedding plot and image search are enabled.
+LightlyStudio automatically embeds added images, so that embedding plot and image search are enabled.
 To skip embedding, pass `embed=False` to the method.
 
-The method supports additional arguments, e.g. you can pass `tag_depth=1` to add the image parent
-folder name as a tag to each sample. See the [API reference](../api/dataset.md#lightly_studio.ImageDataset.add_images_from_path) for full details.
+The method supports additional arguments. For example, you can pass `tag_depth=1` to add the image parent
+folder name as a tag to each sample. See the [API reference](../api/dataset.md#lightly_studio.ImageDataset.add_images_from_path) for the full details.
 
 ### From an Annotation Format
 
-`ImageDataset` class exposes methods to load images with annotations from a number of
-standard formats. See [API reference](../api/dataset.md#lightly_studio.ImageDataset) for full details.
+The `ImageDataset` class exposes methods to load images with annotations from a number of
+standard formats. See the [API reference](../api/dataset.md#lightly_studio.ImageDataset) for the full details.
 
 === "YOLO Object Detections"
 
@@ -81,7 +81,7 @@ standard formats. See [API reference](../api/dataset.md#lightly_studio.ImageData
     <class> <x_center> <y_center> <width> <height>
     ```
 
-    Where coordinates are normalized between 0 and 1.
+    In these YOLO format annotations, coordinates are normalized between 0 and 1.
 
     </details>
 
@@ -116,8 +116,8 @@ standard formats. See [API reference](../api/dataset.md#lightly_studio.ImageData
 
     - Images: Defines metadata for each image in the dataset.
     - Categories: Defines the object classes.
-    - Annotations: Defines object bounding boxes. Note that in the example dataset the file contains
-      also instance segmentation information, however we load just the bounding boxes.
+    - Annotations: Defines object bounding boxes. Note that the file in the example dataset also contains
+      instance segmentation information; however, we load just the bounding boxes.
 
     </details>
 
@@ -216,8 +216,8 @@ standard formats. See [API reference](../api/dataset.md#lightly_studio.ImageData
     )
     ```
 
-    To load Pascal VOC format, the mapping from class IDs to class names is not a part of the
-    format and must be provided separately. In the example above, we load it from a JSON file,
+    To load Pascal VOC format, you must provide the mapping from class IDs to class names separately,
+    as it is not a part of the format. In the example above, we load it from a JSON file,
     but you can also create it manually in Python.
 
     Imported masks are stored as `AnnotationType.INSTANCE_SEGMENTATION`. Use instance segmentation type filters for querying and exporting these annotations.
@@ -267,8 +267,8 @@ standard formats. See [API reference](../api/dataset.md#lightly_studio.ImageData
     )
     ```
 
-    Images are by default expected to be in the `../images` folder, you can specify
-    `images_rel_path` to change it if needed.
+    By default, images are expected to be in the `../images` folder. However, you can specify
+    `images_rel_path` to change the default if needed.
 
     <details>
     <summary>The Lightly format details:</summary>
@@ -326,8 +326,8 @@ Moreover, you can write an adapter to load images with annotations from a custom
 
 ### From a Pre-Existing Dataset
 
-Once a dataset is populated, the data is stored in a database. It can be loaded later as follows
-to skip indexing and embedding it again:
+Once a dataset is populated, the data is stored in a database. To skip indexing and embedding that
+data again, load it later, as follows:
 
 ```python title="Load an Image Dataset from a Database"
 import lightly_studio as ls
@@ -340,17 +340,17 @@ dataset = ls.ImageDataset.load_or_create()
 ```
 
 All three functions `create()`, `load()`, and `load_or_create()` accept an optional `name` argument
-to store multiple datasets in the database, note however that the open-source version of LightlyStudio
-GUI displays only a single dataset.
+to store multiple datasets in the database. Note, however, that the open-source version of the
+LightlyStudio GUI displays only a single dataset.
 
 !!! tip
     The `add_images_from_path(...)` and `add_samples_from_x(...)` methods skip
-    duplicate images, the duplicates are detected based on absolute path.
-    Therefore you can safely use them in a single script with `load_or_create()`,
-    adding and embedding the images will be skipped on subsequent calls.
+    duplicate images. They detect duplicates based on absolute path. You can
+    safely use both methods in a single script with `load_or_create()`, because
+    subsequent calls will skip the adding and embedding steps.
 
 
-## Image Dataset in the GUI
+## Image Datasets in the GUI
 
 Launch the GUI from your terminal:
 
@@ -358,37 +358,37 @@ Launch the GUI from your terminal:
 lightly-studio gui
 ```
 
-The command starts a local web server. Click the link printed in the console - by default
-`http://localhost:8001` - to open the GUI in your browser. Note that the GUI can also be
-started from a Python script by calling `ls.start_gui()`.
+The command starts a local web server. Click the link printed in the console — by default
+`http://localhost:8001` — to open the GUI in your browser. Note that you can also start
+the GUI from a Python script by calling `ls.start_gui()`.
 
 ### Grid View
 
 The main view shows a grid of images in your dataset. From here, you can perform multiple actions:
 
 - Use the left panel to filter the images by tags, annotation labels or metadata.
-- Use the search bar to do similarity search by text or an image.
+- Use the search bar to conduct a similarity search by text or by an image.
 - Use the `Show Embeddings` button to explore the data in embedding space.
-- Use the `Menu` dropdown for further actions like plugins, sampling, classification, export and more.
+- Use the `Menu` dropdown for further actions like plugins, sampling, classification, export, and more.
 
-Refer to dedicated pages in this documentation on every feature for more details.
+Refer to the dedicated pages in this documentation for more details on each feature.
 
 ![Image Dataset Grid](https://storage.googleapis.com/lightly-public/studio/image_dataset_grid.png){ width="100%" }
 
 ### Detail View
 
 Double-clicking on an image opens the image detail view. Here you can annotate the image,
-add captions or view metadata.
+add captions, or view metadata.
 
 ![Image Detail View](https://storage.googleapis.com/lightly-public/studio/image_dataset_detail.png){ width="100%" }
 
 
-## Image Dataset in the Python API
+## Image Datasets in the Python API
 
-### ImageDataset class
+### The ImageDataset Class
 
-The main entrypoint is the [ImageDataset class](../api/dataset.md#imagedataset).
-An instance of it can be created as described above by using one of the factory methods:
+The main entrypoint is the [`ImageDataset` class](../api/dataset.md#imagedataset).
+You can create an instance of the class, as described above, by using one of the factory methods:
 
 ```python title="Create or load an ImageDataset"
 dataset = ls.ImageDataset.create()
@@ -403,9 +403,9 @@ for image in dataset:
     print(image.file_name)
 ```
 
-### ImageSample class
+### The ImageSample Class
 
-[ImageSample class](../api/sample.md#imagesample) provides read and write access to the image data.
+The [`ImageSample` class](../api/sample.md#imagesample) provides read and write access to the image data.
 
 ```python title="Access image data"
 # Grab one sample
